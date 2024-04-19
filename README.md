@@ -1,2 +1,2 @@
 # 100DaysOfNodeJS
- Learning NodeJS throuigh building
+ Learning NodeJS through building
