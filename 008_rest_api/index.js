@@ -4,7 +4,11 @@ const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 const port = 3000;
 
+// Get one movie
 // http://localhost:3000/movies/573a1390f29313caabcd42e8
+
+// Get all movies
+// http://localhost:3000/movies
 
 const client = new MongoClient(process.env.MONGO_URI);
 
@@ -28,6 +32,19 @@ app.get("/movies/:id", async (req, res) => {
         res.status(500).send("Error occured");
     }
 });
+
+app.get("/movies", async (req, res) => {
+    try {
+        const database = client.db('sample_mflix');
+        const movies = database.collection('movies');
+        console.log("Getting all movies")
+        const allMovies = await movies.find().toArray();
+        res.send(allMovies);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error occured");
+    }
+})
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
